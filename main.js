@@ -20,8 +20,8 @@ const taskList = document.querySelector("#task-list");
 
 function renderTasks() {
   const html = tasks
-    .map((task) => {
-      return `<li class="task-item ${task.complete ? "completed" : ""}">
+    .map((task, index) => {
+      return `<li class="task-item ${task.complete ? "completed" : ""}" data-index="${index}">
           <span class="task-title">${task.title}</span>
           <div class="task-action">
             <button class="task-btn edit">Edit</button>
@@ -54,6 +54,35 @@ function addTask(e) {
   renderTasks();
 }
 
+function handleTaskActions(e) {
+  const taskItem = e.target.closest(".task-item");
+  const taskIndex = taskItem.dataset.index;
+  const task = tasks[taskIndex];
+
+  //   Edit
+  if (e.target.closest(".edit")) {
+    let value = prompt("Please enter your adjustment!", task.title);
+
+    if (value === null) return;
+    value = value.trim();
+
+    if (!value) {
+      return alert("Task adjustment cannot be empty!");
+    }
+    task.title = value;
+    renderTasks();
+  }
+
+  //   Mark as done/undone
+  if (e.target.closest(".done")) {
+  }
+
+  //   Delete
+  if (e.target.closest(".delete")) {
+  }
+}
+
 todoForm.addEventListener("submit", addTask);
+taskList.addEventListener("click", handleTaskActions);
 
 renderTasks();

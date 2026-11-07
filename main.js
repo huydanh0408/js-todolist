@@ -71,14 +71,22 @@ function handleTaskActions(e) {
     }
     task.title = value;
     renderTasks();
+    return;
   }
 
   //   Mark as done/undone
   if (e.target.closest(".done")) {
+    task.complete = !task.complete;
+    renderTasks();
+    return;
   }
 
   //   Delete
   if (e.target.closest(".delete")) {
+    if (confirm(`Are you sure want to delete ${task.title} ?`)) {
+      tasks.splice(taskIndex, 1);
+      renderTasks();
+    }
   }
 }
 

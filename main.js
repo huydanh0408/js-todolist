@@ -19,6 +19,11 @@ const submitBtn = document.querySelector("#submit");
 const taskList = document.querySelector("#task-list");
 
 function renderTasks() {
+  if (!tasks.length) {
+    taskList.innerHTML = `<li class="no-task">There is no task is available!</li>`;
+    return;
+  }
+
   const html = tasks
     .map((task, index) => {
       return `<li class="task-item ${task.complete ? "completed" : ""}" data-index="${index}">

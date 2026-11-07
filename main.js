@@ -13,6 +13,9 @@ const tasks = [
   },
 ];
 
+const todoForm = document.querySelector("#todo-form");
+const todoInput = document.querySelector("#todo-input");
+const submitBtn = document.querySelector("#submit");
 const taskList = document.querySelector("#task-list");
 
 function renderTasks() {
@@ -31,5 +34,26 @@ function renderTasks() {
 
   taskList.innerHTML = html;
 }
+
+function addTask(e) {
+  e.preventDefault();
+
+  const value = todoInput.value.trim();
+
+  if (!value) {
+    return alert("Please right something!");
+  }
+
+  tasks.push({
+    title: value,
+    complete: false,
+  });
+
+  todoInput.value = "";
+
+  renderTasks();
+}
+
+todoForm.addEventListener("submit", addTask);
 
 renderTasks();

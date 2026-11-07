@@ -20,7 +20,13 @@
           placeholder="What are your tasks for today?"
           spellcheck="false"
         />
-        <button id="submit" class="submit-btn">Add</button>
+        <button
+          id="submit"
+          class="submit-btn"
+          onmousedown="event.preventDefault()"
+        >
+          Add
+        </button>
       </form>
 
       <!-- Task list -->

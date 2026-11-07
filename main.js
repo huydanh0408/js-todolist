@@ -49,6 +49,11 @@ function addTask(e) {
     return alert("Please right something!");
   }
 
+  if (checkDuplicate(value)) {
+    alert("You already have this task. Please use different title!");
+    return;
+  }
+
   tasks.push({
     title: value,
     complete: false,
@@ -61,7 +66,7 @@ function addTask(e) {
 
 function handleTaskActions(e) {
   const taskItem = e.target.closest(".task-item");
-  const taskIndex = taskItem.dataset.index;
+  const taskIndex = +taskItem.dataset.index;
   const task = tasks[taskIndex];
 
   //   Edit
@@ -73,6 +78,11 @@ function handleTaskActions(e) {
 
     if (!value) {
       return alert("Task adjustment cannot be empty!");
+    }
+
+    if (checkDuplicate(value, taskIndex)) {
+      alert("You already have this task. Please use different title!");
+      return;
     }
     task.title = value;
     renderTasks();
@@ -93,6 +103,14 @@ function handleTaskActions(e) {
       renderTasks();
     }
   }
+}
+
+function checkDuplicate(taskTitle, currentIndex = -1) {
+  return tasks.some(
+    (task, index) =>
+      task.title.toLowerCase() === taskTitle.toLowerCase() &&
+      index !== currentIndex,
+  );
 }
 
 todoForm.addEventListener("submit", addTask);

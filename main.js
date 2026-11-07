@@ -14,7 +14,7 @@ function renderTasks() {
   const html = tasks
     .map((task, index) => {
       return `<li class="task-item ${task.complete ? "completed" : ""}" data-index="${index}">
-          <span class="task-title">${task.title}</span>
+          <span class="task-title">${escapeHTML(task.title)}</span>
           <div class="task-action">
             <button class="task-btn edit">Edit</button>
             <button class="task-btn done">${task.complete ? "Mark as undone" : "Mark as done"}</button>
@@ -108,7 +108,16 @@ function saveTasks() {
   return localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
+function escapeHTML(html) {
+  const div = document.createElement("div");
+  div.textContent = html;
+  return div.innerHTML;
+}
+
 todoForm.addEventListener("submit", addTask);
 taskList.addEventListener("click", handleTaskActions);
 
 renderTasks();
+
+const heading2 = document.querySelector("#heading2");
+heading2.innerText = "<b>Hello</b>"
